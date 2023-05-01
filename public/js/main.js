@@ -7,9 +7,9 @@ formId.addEventListener('submit', (ev) => {
     ev.preventDefault()
     // const inputText = formId[0].value
     const data = { message: "hello world" }
-
+    const mainURL = window.location.origin
     // fetch data from backend
-    fetch('http://localhost:3000/api/monopoli', {
+    fetch(`${mainURL}/api/monopoli`, {
         method: 'post',
         body: JSON.stringify(data),
         headers: new Headers({
