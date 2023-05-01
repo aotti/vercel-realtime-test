@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://js.pusher.com/7.2/pusher.min.js"></script>
+    <title> Vercel Realtime Test </title>
+</head>
+<body>
+    <h2> Home Page </h2>
+    <form id="formId" action="/api/monopoli" method="post">
+        <button type="submit"> Post </button>
+    </form>
+    <div class="textContainer"></div>
+    <script>
+        console.log('<%= db %>');
+    </script>
+    <script src="js/main.js"></script>
+</body>
+</html>
