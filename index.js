@@ -14,7 +14,7 @@ app.use('/', express.static('public'))
 app.use(monopoliRoute)
 app.use(cors())
 
-app.get('/', (req, res)=>{
+app.get('/home', (req, res)=>{
     res.render('home', {db: 'connected to database'})
 })
 
