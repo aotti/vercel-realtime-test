@@ -7,6 +7,9 @@ const pubnub = new PubNub({
     subscribeKey: 'sub-c-8d86234e-6606-4b80-a3df-96ccbe749a01',
     userId: 'myUserId'
 })
+pubnub.subscribe({
+    channels: ['test_channel']
+})
 
 formId.addEventListener('submit', (ev) => {
     ev.preventDefault()
@@ -28,9 +31,6 @@ formId.addEventListener('submit', (ev) => {
 })
 
 if(formId) {
-    pubnub.subscribe({
-        channels: ['test_channel']
-    })
     pubnub.addListener({
         message: function (m) {
             div.innerText += ` ${m.channel} - ${m.message},`
