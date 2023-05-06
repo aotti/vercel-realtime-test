@@ -22,11 +22,13 @@ formId.addEventListener('submit', (ev) => {
     const data = { message: "hello world" }
     const mainURL = window.location.origin
     // fetch data from backend
+    // if fetch post is sending body, then
+    // headers 'Content-Type': 'application/json' is required
     fetch(`${mainURL}/api/monopoli`, {
         method: 'post',
-        headers: new Headers({
+        headers: {
             'Content-Type': 'application/json'
-        })
+        }
     })
     .then(data => data.json()
     .then(result => {

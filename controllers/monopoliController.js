@@ -44,19 +44,20 @@ class Monopoli {
     }
 
     realtimeTrigger(req, res) {
+        pubnub.subscribe({
+            channels: ['test_channel']
+        })
         pubnub.publish({
             channel: 'test_channel',
             message: "hello world"
         }, function (status, response) {
             // console.log(status);
             // console.log(response);
-        })
-        pubnub.subscribe({
-            channels: ['test_channel']
-        })
-        res.status(200).json({
-            status: 200,
-            message: 'success'
+            return res.status(200).json({
+                status: status.statusCode,
+                message: status.error == false ? `success` : `failed`,
+                response: response.timetoken
+            })
         })
     }
 }
