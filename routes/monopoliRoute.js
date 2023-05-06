@@ -4,6 +4,6 @@ const Monopoli = new monopoliController()
 
 router
     .get('/api/monopoli', Monopoli.getAllData)
-    .post('/api/monopoli', Monopoli.pusherTrigger)
+    .post('/api/monopoli', Monopoli.realtimeTrigger)
 
 module.exports = router

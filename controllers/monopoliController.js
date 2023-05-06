@@ -1,15 +1,15 @@
+const { response } = require('express')
 const supabase = require('../helpers/database')
 const { newPromise } = require('../helpers/promise')
-const Pusher = require("pusher");
 require('dotenv').config()
-
-const pusher = new Pusher({
-    appId: process.env.PUSHER_APPID,
-    key: process.env.PUSHER_KEY,
-    secret: process.env.PUSHER_SECRET,
-    cluster: "ap1",
-    useTLS: true
-});
+// pubnub config
+const { v4: uuidv4 } = require('uuid')
+const PubNub = require('pubnub')
+const pubnub = new PubNub({
+    subscribeKey: process.env.PUBNUB_SUBSCRIBE_KEY,
+    publishKey: process.env.PUBNUB_PUBLISH_KEY,
+    userId: uuidv4()
+})
 
 class Monopoli {
     getAllData(req, res) {
@@ -18,18 +18,43 @@ class Monopoli {
         const selectAllDataFromDB = async () => {
             // ambil semua data dari supabase
             const {data, error} = await supabase.from('test').select()
-            if(error)
-                return console.log(error);
+            if(error) {
+                return res.status(500).json({
+                    status: 500,
+                    message: 'failed',
+                    data: error
+                })
+            }
             return {data: data, error: error}
         }
-        newPromise(req, res, selectAllDataFromDB)
+        newPromise(selectAllDataFromDB)
+        .then(data => {
+            return res.status(200).json({
+                status: 200,
+                message: 'success',
+                data: data
+            })
+        }).catch(err => {
+            return res.status(500).json({
+                status: 500,
+                message: 'failed',
+                data: err
+            })
+        })
     }
 
-    pusherTrigger(req, res) {
-        pusher.trigger("monopoli-back", "monopoli-front", {
-            message: req.body.message
-        });
-        return res.status(200).json({
+    realtimeTrigger(req, res) {
+        pubnub.publish({
+            channel: 'test_channel',
+            message: "hello world"
+        }, function (status, response) {
+            // console.log(status);
+            // console.log(response);
+        })
+        pubnub.subscribe({
+            channels: ['test_channel']
+        })
+        res.status(200).json({
             status: 200,
             message: 'success'
         })
