@@ -14,19 +14,17 @@ formId.addEventListener('submit', (ev) => {
     const data = { message: "hello world" }
     const mainURL = window.location.origin
     // fetch data from backend
-    // fetch(`${mainURL}/api/monopoli`, {
-    //     method: 'post',
-    //     body: JSON.stringify(data),
-    //     headers: new Headers({
-    //         'Content-Type': 'application/json'
-    //     })
-    // })
-    // .then(data => data.json()
-    // .then(result => {
-    //     // res dari post: api/monopoli 
-    // }))
-    // .catch(err => console.log(err))
-
+    fetch(`${mainURL}/api/monopoli`, {
+        method: 'post',
+        headers: new Headers({
+            'Content-Type': 'application/json'
+        })
+    })
+    .then(data => data.json()
+    .then(result => {
+        // res dari post: api/monopoli 
+    }))
+    .catch(err => console.log(err))
 })
 
 if(formId) {
