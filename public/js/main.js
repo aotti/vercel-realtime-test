@@ -10,6 +10,11 @@ const pubnub = new PubNub({
 pubnub.subscribe({
     channels: ['test_channel']
 })
+pubnub.addListener({
+    message: function (m) {
+        div.innerText += ` ${m.channel} - ${m.message},`
+    }
+})
 
 formId.addEventListener('submit', (ev) => {
     ev.preventDefault()
@@ -29,11 +34,3 @@ formId.addEventListener('submit', (ev) => {
     }))
     .catch(err => console.log(err))
 })
-
-if(formId) {
-    pubnub.addListener({
-        message: function (m) {
-            div.innerText += ` ${m.channel} - ${m.message},`
-        }
-    })
-}
